@@ -1,0 +1,34 @@
+class Card
+types
+public String = seq of char;
+instance variables
+id: nat;
+group: Group;
+name: String;
+plates: set of String;
+
+operations
+public Card: nat*Group*String==> Card
+	Card(newId,newGroup,newName) == (
+		id := newId;
+		group := newGroup;
+		return self;
+	)
+	pre newId>-1;
+	
+public getCard: () ==> Card
+	getCard() == return self;
+	
+public getId: () ==> nat
+	getId() == return self.id;
+	
+public getGroup: () ==> Group
+	getGroup() == return self.group;
+	
+public addPlate: String ==> ()
+	addPlate(newPlate) == (
+		plates := plates union {newPlate}
+	)
+	pre newPlate not in set plates;
+	
+end Card

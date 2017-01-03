@@ -1,0 +1,12 @@
+class ParkingLot
+types
+
+instance variables
+id: nat;
+maxLotation: nat;
+currLotation: nat;
+group: Group;
+operations
+-- TODO Define operations here
+
+end ParkingLot
