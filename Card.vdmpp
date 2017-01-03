@@ -6,24 +6,31 @@ id: nat;
 group: Group;
 name: String;
 plates: set of String;
+currParkingLot: ParkingLot;
 
 operations
 public Card: nat*Group*String==> Card
 	Card(newId,newGroup,newName) == (
 		id := newId;
 		group := newGroup;
+		name := newName;
+		plates := {};
+		currParkingLot := nil;
 		return self;
 	)
 	pre newId>-1;
 	
-public getCard: () ==> Card
-	getCard() == return self;
+public get: () ==> Card
+	get() == return self;
 	
 public getId: () ==> nat
 	getId() == return self.id;
 	
 public getGroup: () ==> Group
 	getGroup() == return self.group;
+	
+public getCurrParkingLot: () ==> ParkingLot
+	getCurrParkingLot() == return self.currParkingLot;
 	
 public addPlate: String ==> ()
 	addPlate(newPlate) == (

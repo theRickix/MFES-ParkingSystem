@@ -1,10 +1,9 @@
 class System
 types
 -- TODO Define types here
-values
--- TODO Define values here
+
 instance variables
--- TODO Define instance variables here
+
 operations
 -- TODO Define operations here
 functions

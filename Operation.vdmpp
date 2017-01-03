@@ -1,14 +1,46 @@
 class Operation
+
 types
--- TODO Define types here
-values
--- TODO Define values here
+
+public Date :: day:nat1 month:nat1 year:nat inv mk_Date(d,m,y) == d <=31 and m<=12;
+public Result = <Allow> | <Deny>;
+public Type = <Enter> | <Leave>;
+
 instance variables
--- TODO Define instance variables here
+
+id: nat;
+date: Date;
+cardUsed: Card;
+parking: ParkingLot;
+type: Type;
+result: Result;
+
 operations
--- TODO Define operations here
-functions
--- TODO Define functiones here
-traces
--- TODO Define Combinatorial Test Traces here
+
+public Operation: nat*Date*Card*ParkingLot*Type ==> Operation
+	Operation(newId,newDate,newCard,newParking,newType) == (
+		id := newId;
+		date := newDate;
+		cardUsed := newCard;
+		parking := newParking;
+		type := newType;
+		
+		if type = <Enter>
+		then self.enter();
+		
+		--if type = <Leave>
+		--then result := self.leave();
+		
+		
+		return self;
+	)
+	pre newId>-1;
+	
+public enter: () ==> Result
+	enter() == (
+		result := <Deny>;
+		if cardUsed.currParkingLot = nil and cardUsed.getGroup() = parking.group
+		then result := <Allow>;
+	);
+
 end Operation

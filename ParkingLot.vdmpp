@@ -6,7 +6,43 @@ id: nat;
 maxLotation: nat;
 currLotation: nat;
 group: Group;
+
 operations
--- TODO Define operations here
+
+public ParkingLot: nat*nat*Group ==> ParkingLot
+	ParkingLot(newId,newMaxLotation,newGroup) == (
+		id := newId;
+		maxLotation := newMaxLotation;
+		currLotation := maxLotation;
+		group := newGroup;
+		return self;
+	)
+	pre newId>-1;
+
+public get: () ==> ParkingLot
+	get() == return self;
+	
+public getId: () ==> nat
+	getId() == return self.id;
+	
+public getMaxLotation: () ==> nat
+	getMaxLotation() == return self.maxLotation;
+	
+public getCurrLotation: () ==> nat
+	getCurrLotation() == return self.currLotation;
+	
+public getGroup: () ==> Group
+	getGroup() == return self.group;
+	
+public carEntered: () ==> ()
+	carEntered() == (
+		currLotation := currLotation-1;
+	);
+	
+public carLeft: () ==> ()
+	carLeft() == (
+		currLotation := currLotation+1;
+	)
+	post currLotation <= maxLotation;
 
 end ParkingLot

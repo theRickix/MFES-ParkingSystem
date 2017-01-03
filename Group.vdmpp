@@ -1,7 +1,26 @@
 class Group
 
+types
+public String = seq of char;
+
 instance variables
+id: nat;
+name: String;
 
 operations
+
+public Group: nat*String ==> Group
+	Group(newId,newName) == (
+		id := newId;
+		name := newName;
+		return self;
+	)
+	pre newId>-1;
+	
+public get: () ==> Group
+	get() == return self;
+	
+public getId: () ==> nat
+	getId() == return self.id;
 
 end Group
