@@ -2,7 +2,6 @@ class Operation
 
 types
 
-public Date :: day:nat1 month:nat1 year:nat inv mk_Date(d,m,y) == d <=31 and m<=12;
 public Result = <Allow> | <Deny>;
 public Type = <Enter> | <Leave>;
 
@@ -36,10 +35,20 @@ public Operation: nat*Date*Card*ParkingLot*Type ==> Operation
 	)
 	pre newId>-1;
 	
-public enter: () ==> Result
+private enter: () ==> ()
 	enter() == (
 		result := <Deny>;
-		if cardUsed.currParkingLot = nil and cardUsed.getGroup() = parking.group
+		if cardUsed not in set parking.getCardsIn() and not cardUsed.isInside()
+		then (
+		result := <Allow>;
+		parking.carEntered(cardUsed);
+		)
+	);
+
+private leave: () ==> ()
+	leave() == (
+		result := <Deny>;
+		if cardUsed in set parking.getCardsIn() and cardUsed.isInside()
 		then result := <Allow>;
 	);
 

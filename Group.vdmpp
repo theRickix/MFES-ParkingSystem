@@ -17,9 +17,6 @@ public Group: nat*String ==> Group
 	)
 	pre newId>-1;
 	
-public get: () ==> Group
-	get() == return self;
-	
 public getId: () ==> nat
 	getId() == return self.id;
 

@@ -6,7 +6,7 @@ id: nat;
 group: Group;
 name: String;
 plates: set of String;
-currParkingLot: ParkingLot;
+inside: bool;
 
 operations
 public Card: nat*Group*String==> Card
@@ -15,13 +15,10 @@ public Card: nat*Group*String==> Card
 		group := newGroup;
 		name := newName;
 		plates := {};
-		currParkingLot := nil;
+		inside := false;
 		return self;
 	)
 	pre newId>-1;
-	
-public get: () ==> Card
-	get() == return self;
 	
 public getId: () ==> nat
 	getId() == return self.id;
@@ -29,8 +26,8 @@ public getId: () ==> nat
 public getGroup: () ==> Group
 	getGroup() == return self.group;
 	
-public getCurrParkingLot: () ==> ParkingLot
-	getCurrParkingLot() == return self.currParkingLot;
+public isInside: () ==> bool
+	isInside() == return self.inside;
 	
 public addPlate: String ==> ()
 	addPlate(newPlate) == (
