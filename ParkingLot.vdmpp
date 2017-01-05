@@ -18,8 +18,7 @@ public ParkingLot: nat*nat*Group ==> ParkingLot
 		group := newGroup;
 		cardsIn := {};
 		return self;
-	)
-	pre newId>-1;
+	);
 	
 public getId: () ==> nat
 	getId() == return self.id;

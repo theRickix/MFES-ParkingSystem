@@ -1,13 +1,43 @@
 class System
 types
--- TODO Define types here
+public String = seq of char;
 
 instance variables
+idGroup: nat;
+idCard: nat;
+idParking: nat;
+idOperation: nat;
+
+groups: set of Group;
+cards: set of Card;
+parkings: set of ParkingLot;
+ops: set of Operation;
 
 operations
--- TODO Define operations here
-functions
--- TODO Define functiones here
-traces
--- TODO Define Combinatorial Test Traces here
+public System: () ==> System
+	System() == (
+		idGroup:=0;
+		idCard:=0;
+		idParking:=0;
+		idOperation:=0;
+		groups := {};
+		cards := {};
+		parkings := {};
+		ops := {};
+		return self;
+	);
+	
+public addGroup: String ==> ()
+	addGroup(newName) == (
+		groups := groups union {new Group(idGroup,newName)};
+		idGroup := idGroup + 1;
+	);
+	
+public addCard: Group*String ==> ()
+	addCard(newGroup,newName) == (
+		cards := cards union {new Card(idCard,newGroup,newName)};
+		idCard := idCard+1;
+	)
+	pre newGroup in set groups;
+
 end System

@@ -1,6 +1,8 @@
 class Card
+
 types
 public String = seq of char;
+
 instance variables
 id: nat;
 group: Group;
@@ -17,8 +19,7 @@ public Card: nat*Group*String==> Card
 		plates := {};
 		inside := false;
 		return self;
-	)
-	pre newId>-1;
+	);
 	
 public getId: () ==> nat
 	getId() == return self.id;

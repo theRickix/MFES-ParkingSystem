@@ -27,13 +27,12 @@ public Operation: nat*Date*Card*ParkingLot*Type ==> Operation
 		if type = <Enter>
 		then self.enter();
 		
-		--if type = <Leave>
-		--then result := self.leave();
+		if type = <Leave>
+		then self.leave();
 		
 		
 		return self;
-	)
-	pre newId>-1;
+	);
 	
 private enter: () ==> ()
 	enter() == (
@@ -49,7 +48,10 @@ private leave: () ==> ()
 	leave() == (
 		result := <Deny>;
 		if cardUsed in set parking.getCardsIn() and cardUsed.isInside()
-		then result := <Allow>;
+		then (
+		result := <Allow>;
+		parking.carLeft(cardUsed);
+		)
 	);
 
 end Operation
