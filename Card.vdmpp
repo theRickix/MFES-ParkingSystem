@@ -4,20 +4,24 @@ types
 public String = seq of char;
 
 instance variables
-id: nat;
-group: Group;
-name: String;
-plates: set of String;
-inside: bool;
+public id: nat;
+public group: Group;
+public username: String;
+public plates: set of String;
+public inside: bool;
+public expirationDate: Date;
+public cancelled: bool;
 
 operations
-public Card: nat*Group*String==> Card
-	Card(newId,newGroup,newName) == (
+public Card: nat*Group*String*Date==> Card
+	Card(newId,newGroup,newName,newDate) == (
 		id := newId;
 		group := newGroup;
-		name := newName;
+		username := newName;
 		plates := {};
 		inside := false;
+		expirationDate := newDate;
+		cancelled := false;
 		return self;
 	);
 	
@@ -27,8 +31,43 @@ public getId: () ==> nat
 public getGroup: () ==> Group
 	getGroup() == return self.group;
 	
+public getDate: () ==> Date
+	getDate() == return self.expirationDate;
+	
+public getName: () ==> String
+	getName() == return self.username;
+
+public getPlates: () ==> set of String
+	getPlates() == return self.plates;
+	
+public setInside: () ==> ()
+	setInside() == inside := true;
+	
+public setOutside: () ==> ()
+	setOutside() == inside := false;	
+	
 public isInside: () ==> bool
 	isInside() == return self.inside;
+	
+public isCancelled: () ==> bool
+	isCancelled() == return self.cancelled;
+	
+public cancel: () ==> ()
+	cancel() == cancelled := true;
+	
+public reactivate: () ==> ()
+	reactivate() == cancelled := false;
+	
+public isNotExpired: (Date) ==> bool
+	isNotExpired(date) == (
+		if expirationDate.year > date.year or
+		(expirationDate.year = date.year and expirationDate.month > date.month) or
+		(expirationDate.year = date.year and expirationDate.month = date.month
+			and expirationDate.day >= date.day)
+		then return true
+		else return false;
+	);
+	
 	
 public addPlate: String ==> ()
 	addPlate(newPlate) == (

@@ -1,0 +1,50 @@
+class Test is subclass of MyTestCase
+
+operations
+public Test: () ==> Test
+	Test() == (
+		return self;
+		);
+		
+--Test initializing and populating System.
+public testSystem: () ==> ()
+	testSystem() == (
+		dcl system: System := new System();
+		dcl group: Group := system.addGroup("Students");
+		dcl park: ParkingLot := system.addParking(30,group);
+		dcl date1: Date := new Date(31,12,2017);
+		dcl card1: Card := system.addCard(group,"John Doe",date1);
+		
+		assertEqual("Students",group.getName());
+		assertEqual("Students",park.getGroup().getName());
+		assertEqual(30,park.getMaxLotation());
+		assertEqual("John Doe",card1.getName());
+		assertEqual(group,card1.getGroup());
+		assertEqual(date1,card1.getDate());
+	);
+	
+public testCard: () ==> ()
+	testCard() == (
+		dcl system: System := new System();
+		dcl group: Group := system.addGroup("Students");
+		dcl date1: Date := new Date(1,1,2015);
+		dcl date2: Date := new Date(2,2,2017);
+		dcl card1: Card := system.addCard(group,"John Doe",date1);
+		
+		assertEqual(false,card1.isCancelled());
+		assertEqual(false,card1.isInside());
+		assertEqual(false,card1.isNotExpired(date2));
+		
+		
+		card1.cancel();
+		assertEqual(true,card1.isCancelled());
+		
+		card1.reactivate();
+		assertEqual(false,card1.isCancelled());
+		
+		card1.addPlate("33-MM-22");
+		assertEqual({"33-MM-22"},card1.getPlates());
+		
+		
+	);
+end Test

@@ -18,5 +18,8 @@ public Group: nat*String ==> Group
 	
 public getId: () ==> nat
 	getId() == return self.id;
+	
+public getName: () ==> String
+	getName() == return self.name;
 
 end Group

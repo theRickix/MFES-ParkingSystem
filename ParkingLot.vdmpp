@@ -7,6 +7,7 @@ maxLotation: nat;
 currLotation: nat;
 group: Group;
 cardsIn: set of Card;
+public maintenance: bool;
 
 operations
 
@@ -17,6 +18,7 @@ public ParkingLot: nat*nat*Group ==> ParkingLot
 		currLotation := maxLotation;
 		group := newGroup;
 		cardsIn := {};
+		maintenance := false;
 		return self;
 	);
 	

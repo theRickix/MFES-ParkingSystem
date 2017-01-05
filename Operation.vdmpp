@@ -9,7 +9,7 @@ instance variables
 
 id: nat;
 date: Date;
-cardUsed: Card;
+public cardUsed: Card;
 parking: ParkingLot;
 type: Type;
 result: Result;
@@ -41,8 +41,15 @@ private enter: () ==> ()
 		then (
 		result := <Allow>;
 		parking.carEntered(cardUsed);
+		cardUsed.setInside();
 		)
-	);
+	) 
+	pre if (expirationDate.year > date.year or --Check if it has not expired
+		(expirationDate.year = date.year and expirationDate.month > date.month) or
+		(expirationDate.year = date.year and expirationDate.month = date.month
+			and expirationDate.day >= date.day))
+			and not cardUsed.cancelled --Check if card is cancelled
+			and not parking.maintenance; --Check if parking is on maintenance;
 
 private leave: () ==> ()
 	leave() == (
@@ -51,7 +58,9 @@ private leave: () ==> ()
 		then (
 		result := <Allow>;
 		parking.carLeft(cardUsed);
+		cardUsed.setOutside();
 		)
-	);
+	); --I assumed not to check same things as in "enter" because the car has to go out even
+			-- even if it is cancelled or expired, I guess
 
 end Operation

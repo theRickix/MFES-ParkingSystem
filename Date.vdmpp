@@ -1,9 +1,9 @@
 class Date
 
 instance variables
-day: nat1;
-month: nat1;
-year: nat;
+public day: nat1;
+public month: nat1;
+public year: nat;
 
 operations
 public Date: nat*nat*nat ==> Date

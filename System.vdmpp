@@ -1,6 +1,8 @@
 class System
 types
 public String = seq of char;
+public Result = <Allow> | <Deny>;
+public Type = <Enter> | <Leave>;
 
 instance variables
 idGroup: nat;
@@ -27,17 +29,71 @@ public System: () ==> System
 		return self;
 	);
 	
-public addGroup: String ==> ()
+public addGroup: String ==> Group
 	addGroup(newName) == (
-		groups := groups union {new Group(idGroup,newName)};
+		dcl newGroup: Group := new Group(idGroup,newName);
+		groups := groups union {newGroup};
 		idGroup := idGroup + 1;
+		return newGroup;
 	);
 	
-public addCard: Group*String ==> ()
-	addCard(newGroup,newName) == (
-		cards := cards union {new Card(idCard,newGroup,newName)};
+public addCard: Group*String*Date==> Card
+	addCard(newGroup,newName,newDate) == (
+		dcl newCard: Card := new Card(idCard,newGroup,newName,newDate);
+		cards := cards union {newCard};
 		idCard := idCard+1;
+		return newCard;
 	)
 	pre newGroup in set groups;
+	
+public addParking: nat*Group ==> ParkingLot
+	addParking(maxLotation,newGroup) == (
+		dcl newParking: ParkingLot := new ParkingLot(idParking,maxLotation,newGroup);
+		parkings := parkings union {newParking};
+		idParking := idParking + 1;
+		return newParking;
+	)
+	pre newGroup in set groups;
+	
+public addOperation: Date*Card*ParkingLot*Type ==> Operation
+	addOperation(currentDate,newCard,newParking,newType) == (
+		dcl newOp: Operation := new Operation(idOperation,currentDate,newCard,newParking,newType);
+		ops := ops union {newOp};
+		return newOp;
+	)
+	pre newCard in set cards and newParking in set parkings;
+	
+public cancelCard: Card ==> ()
+	cancelCard(newCard) == (
+		newCard.cancel()
+	)
+	pre newCard in set cards
+	post newCard.cancelled = true;
+
+public reactivateCard: Card ==> ()
+	reactivateCard(newCard) == (
+		newCard.reactivate()
+	)
+	pre newCard in set cards
+	post newCard.cancelled = false;
+
+public getParkingCurrLotation: ParkingLot ==> nat
+	getParkingCurrLotation(parking) == (
+		return parking.getCurrLotation();
+	)
+	pre parking in set parkings;
+	
+public getCardOperations: Card ==> set of Operation
+	getCardOperations(newCard) == (
+		dcl opsCard: set of Operation;
+		
+		for all op in set ops do (
+			if op.cardUsed = newCard
+			then opsCard := opsCard union {op}
+		);
+		
+		return opsCard;
+	)
+	pre newCard in set cards;
 
 end System
