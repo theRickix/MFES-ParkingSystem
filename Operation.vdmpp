@@ -44,10 +44,10 @@ private enter: () ==> ()
 		cardUsed.setInside();
 		)
 	) 
-	pre if (expirationDate.year > date.year or --Check if it has not expired
-		(expirationDate.year = date.year and expirationDate.month > date.month) or
-		(expirationDate.year = date.year and expirationDate.month = date.month
-			and expirationDate.day >= date.day))
+	pre (cardUsed.expirationDate.year > date.year or --Check if it has not expired
+		(cardUsed.expirationDate.year = date.year and cardUsed.expirationDate.month > date.month) or
+		(cardUsed.expirationDate.year = date.year and cardUsed.expirationDate.month = date.month
+			and cardUsed.expirationDate.day >= date.day))
 			and not cardUsed.cancelled --Check if card is cancelled
 			and not parking.maintenance; --Check if parking is on maintenance;
 
