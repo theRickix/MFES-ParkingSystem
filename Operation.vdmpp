@@ -30,7 +30,7 @@ public Operation: nat*Date*Card*ParkingLot*Type ==> Operation
 		if type = <Leave>
 		then self.leave();
 		
-		
+		cardUsed.addOperation(self);
 		return self;
 	);
 	
@@ -49,7 +49,8 @@ private enter: () ==> ()
 		(cardUsed.expirationDate.year = date.year and cardUsed.expirationDate.month = date.month
 			and cardUsed.expirationDate.day >= date.day))
 			and not cardUsed.cancelled --Check if card is cancelled
-			and not parking.maintenance; --Check if parking is on maintenance;
+			and not parking.maintenance
+			and not parking.currLotation = 0; --Check if parking is on maintenance;
 
 private leave: () ==> ()
 	leave() == (
@@ -62,5 +63,8 @@ private leave: () ==> ()
 		)
 	); --I assumed not to check same things as in "enter" because the car has to go out even
 			-- even if it is cancelled or expired, I guess
+			
+public getResult: () ==> Result
+	getResult() == return self.result;
 
 end Operation

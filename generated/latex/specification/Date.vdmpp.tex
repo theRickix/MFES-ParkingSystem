@@ -1,0 +1,35 @@
+\begin{vdmpp}[breaklines=true]
+class Date
+
+instance variables
+public day: nat1;
+public month: nat1;
+public year: nat;
+
+operations
+(*@
+\label{Date:9}
+@*)
+public Date: nat*nat*nat ==> Date
+ Date(newDay,newMonth,newYear) == (
+  day := newDay;
+  month := newMonth;
+  year := newYear;
+ )
+ pre newDay < 32 and newMonth < 13;
+ 
+end Date
+\end{vdmpp}
+\bigskip
+\begin{longtable}{|l|r|r|r|}
+\hline
+Function or operation & Line & Coverage & Calls \\
+\hline
+\hline
+\hyperref[Date:9]{Date} & 9&100.0\% & 5 \\
+\hline
+\hline
+Date.vdmpp & & 100.0\% & 5 \\
+\hline
+\end{longtable}
+

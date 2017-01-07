@@ -11,6 +11,7 @@ public plates: set of String;
 public inside: bool;
 public expirationDate: Date;
 public cancelled: bool;
+public ops: set of Operation;
 
 operations
 public Card: nat*Group*String*Date==> Card
@@ -22,6 +23,7 @@ public Card: nat*Group*String*Date==> Card
 		inside := false;
 		expirationDate := newDate;
 		cancelled := false;
+		ops := {};
 		return self;
 	);
 	
@@ -74,5 +76,19 @@ public addPlate: String ==> ()
 		plates := plates union {newPlate}
 	)
 	pre newPlate not in set plates;
+
+public removePlate: String ==> ()
+	removePlate(plate) == (
+		plates := plates \ {plate}
+	)
+	pre plate in set plates;
+	
+public addOperation: Operation ==> ()
+	addOperation(op1) == (
+		ops := ops union {op1}
+	);
+	
+public getOperations: () ==> set of Operation
+	getOperations() == return self.ops;
 	
 end Card

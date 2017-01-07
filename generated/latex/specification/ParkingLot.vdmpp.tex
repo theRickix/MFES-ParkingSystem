@@ -1,0 +1,106 @@
+\begin{vdmpp}[breaklines=true]
+class ParkingLot
+types
+
+instance variables
+id: nat;
+maxLotation: nat;
+public currLotation: nat;
+group: Group;
+cardsIn: set of Card;
+public maintenance: bool;
+
+operations
+
+(*@
+\label{ParkingLot:14}
+@*)
+public ParkingLot: nat*nat*Group ==> ParkingLot
+ ParkingLot(newId,newMaxLotation,newGroup) == (
+  id := newId;
+  maxLotation := newMaxLotation;
+  currLotation := maxLotation;
+  group := newGroup;
+  cardsIn := {};
+  maintenance := false;
+  return self;
+ );
+ 
+(*@
+\label{getId:25}
+@*)
+public getId: () ==> nat
+ getId() == return self.id;
+ 
+(*@
+\label{getMaxLotation:28}
+@*)
+public getMaxLotation: () ==> nat
+ getMaxLotation() == return self.maxLotation;
+ 
+(*@
+\label{getCurrLotation:31}
+@*)
+public getCurrLotation: () ==> nat
+ getCurrLotation() == return self.currLotation;
+ 
+(*@
+\label{getGroup:34}
+@*)
+public getGroup: () ==> Group
+ getGroup() == return self.group;
+ 
+(*@
+\label{getCardsIn:37}
+@*)
+public getCardsIn: () ==> set of Card
+ getCardsIn() == return self.cardsIn;
+ 
+(*@
+\label{carEntered:40}
+@*)
+public carEntered: Card ==> ()
+ carEntered(newCard) == (
+  currLotation := currLotation-1;
+  cardsIn := cardsIn union {newCard};
+ );
+ 
+(*@
+\label{carLeft:46}
+@*)
+public carLeft: Card ==> ()
+ carLeft(newCard) == (
+  currLotation := currLotation+1;
+  cardsIn := cardsIn \ {newCard};
+ )
+ post currLotation <= maxLotation;
+
+end ParkingLot
+\end{vdmpp}
+\bigskip
+\begin{longtable}{|l|r|r|r|}
+\hline
+Function or operation & Line & Coverage & Calls \\
+\hline
+\hline
+\hyperref[ParkingLot:14]{ParkingLot} & 14&100.0\% & 2 \\
+\hline
+\hyperref[carEntered:40]{carEntered} & 40&100.0\% & 1 \\
+\hline
+\hyperref[carLeft:46]{carLeft} & 46&100.0\% & 1 \\
+\hline
+\hyperref[getCardsIn:37]{getCardsIn} & 37&100.0\% & 3 \\
+\hline
+\hyperref[getCurrLotation:31]{getCurrLotation} & 31&100.0\% & 2 \\
+\hline
+\hyperref[getGroup:34]{getGroup} & 34&100.0\% & 1 \\
+\hline
+\hyperref[getId:25]{getId} & 25&100.0\% & 1 \\
+\hline
+\hyperref[getMaxLotation:28]{getMaxLotation} & 28&100.0\% & 1 \\
+\hline
+\hline
+ParkingLot.vdmpp & & 100.0\% & 12 \\
+\hline
+\end{longtable}
+

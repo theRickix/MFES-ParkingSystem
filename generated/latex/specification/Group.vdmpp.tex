@@ -1,0 +1,53 @@
+\begin{vdmpp}[breaklines=true]
+class Group
+
+types
+public String = seq of char;
+
+instance variables
+id: nat;
+name: String;
+
+operations
+
+(*@
+\label{Group:12}
+@*)
+public Group: nat*String ==> Group
+ Group(newId,newName) == (
+  id := newId;
+  name := newName;
+  return self;
+ );
+ 
+(*@
+\label{getId:19}
+@*)
+public getId: () ==> nat
+ getId() == return self.id;
+ 
+(*@
+\label{getName:22}
+@*)
+public getName: () ==> String
+ getName() == return self.name;
+
+end Group
+\end{vdmpp}
+\bigskip
+\begin{longtable}{|l|r|r|r|}
+\hline
+Function or operation & Line & Coverage & Calls \\
+\hline
+\hline
+\hyperref[Group:12]{Group} & 12&100.0\% & 3 \\
+\hline
+\hyperref[getId:19]{getId} & 19&100.0\% & 1 \\
+\hline
+\hyperref[getName:22]{getName} & 22&100.0\% & 2 \\
+\hline
+\hline
+Group.vdmpp & & 100.0\% & 6 \\
+\hline
+\end{longtable}
+

@@ -13,14 +13,5 @@ public Date: nat*nat*nat ==> Date
 		year := newYear;
 	)
 	pre newDay < 32 and newMonth < 13;
-
-public getDay: () ==> nat1
-	getDay() == return self.day;
-
-public getMonth: () ==> nat1
-	getMonth() == return self.month;
-
-public getYear: () ==> nat
-	getYear() == return self.year;
 	
 end Date

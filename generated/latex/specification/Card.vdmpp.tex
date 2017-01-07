@@ -1,0 +1,192 @@
+\begin{vdmpp}[breaklines=true]
+class Card
+
+types
+public String = seq of char;
+
+instance variables
+public id: nat;
+public group: Group;
+public username: String;
+public plates: set of String;
+public inside: bool;
+public expirationDate: Date;
+public cancelled: bool;
+public ops: set of Operation;
+
+operations
+(*@
+\label{Card:17}
+@*)
+public Card: nat*Group*String*Date==> Card
+ Card(newId,newGroup,newName,newDate) == (
+  id := newId;
+  group := newGroup;
+  username := newName;
+  plates := {};
+  inside := false;
+  expirationDate := newDate;
+  cancelled := false;
+  ops := {};
+  return self;
+ );
+ 
+(*@
+\label{getId:30}
+@*)
+public getId: () ==> nat
+ getId() == return self.id;
+ 
+(*@
+\label{getGroup:33}
+@*)
+public getGroup: () ==> Group
+ getGroup() == return self.group;
+ 
+(*@
+\label{getDate:36}
+@*)
+public getDate: () ==> Date
+ getDate() == return self.expirationDate;
+ 
+(*@
+\label{getName:39}
+@*)
+public getName: () ==> String
+ getName() == return self.username;
+
+(*@
+\label{getPlates:42}
+@*)
+public getPlates: () ==> set of String
+ getPlates() == return self.plates;
+ 
+(*@
+\label{setInside:45}
+@*)
+public setInside: () ==> ()
+ setInside() == inside := true;
+ 
+(*@
+\label{setOutside:48}
+@*)
+public setOutside: () ==> ()
+ setOutside() == inside := false; 
+ 
+(*@
+\label{isInside:51}
+@*)
+public isInside: () ==> bool
+ isInside() == return self.inside;
+ 
+(*@
+\label{isCancelled:54}
+@*)
+public isCancelled: () ==> bool
+ isCancelled() == return self.cancelled;
+ 
+(*@
+\label{cancel:57}
+@*)
+public cancel: () ==> ()
+ cancel() == cancelled := true;
+ 
+(*@
+\label{reactivate:60}
+@*)
+public reactivate: () ==> ()
+ reactivate() == cancelled := false;
+ 
+(*@
+\label{isNotExpired:63}
+@*)
+public isNotExpired: (Date) ==> bool
+ isNotExpired(date) == (
+  if expirationDate.year > date.year or
+  (expirationDate.year = date.year and (*@\vdmnotcovered{expirationDate}@*).(*@\vdmnotcovered{month}@*) (*@\vdmnotcovered{>}@*) (*@\vdmnotcovered{date}@*).(*@\vdmnotcovered{month}@*)) or
+  (expirationDate.year = date.year and (*@\vdmnotcovered{expirationDate}@*).(*@\vdmnotcovered{month}@*) (*@\vdmnotcovered{=}@*) (*@\vdmnotcovered{date}@*).(*@\vdmnotcovered{month}@*)
+   (*@\vdmnotcovered{and}@*) (*@\vdmnotcovered{expirationDate}@*).(*@\vdmnotcovered{day}@*) (*@\vdmnotcovered{>=}@*) (*@\vdmnotcovered{date}@*).(*@\vdmnotcovered{day}@*))
+  then (*@\vdmnotcovered{return}@*) (*@\vdmnotcovered{true}@*)
+  else return false;
+ );
+ 
+ 
+(*@
+\label{addPlate:74}
+@*)
+public addPlate: String ==> ()
+ addPlate(newPlate) == (
+  plates := plates union {newPlate}
+ )
+ pre newPlate not in set plates;
+
+(*@
+\label{removePlate:80}
+@*)
+public removePlate: String ==> ()
+ removePlate(plate) == (
+  plates := plates \ {plate}
+ )
+ pre plate in set plates;
+ 
+(*@
+\label{addOperation:86}
+@*)
+public addOperation: Operation ==> ()
+ addOperation(op1) == (
+  ops := ops union {op1}
+ );
+ 
+(*@
+\label{getOperations:91}
+@*)
+public getOperations: () ==> set of Operation
+ getOperations() == (*@\vdmnotcovered{return}@*) (*@\vdmnotcovered{self}@*).(*@\vdmnotcovered{ops}@*);
+ 
+end Card
+\end{vdmpp}
+\bigskip
+\begin{longtable}{|l|r|r|r|}
+\hline
+Function or operation & Line & Coverage & Calls \\
+\hline
+\hline
+\hyperref[Card:17]{Card} & 17&100.0\% & 3 \\
+\hline
+\hyperref[addOperation:86]{addOperation} & 86&100.0\% & 3 \\
+\hline
+\hyperref[addPlate:74]{addPlate} & 74&100.0\% & 2 \\
+\hline
+\hyperref[cancel:57]{cancel} & 57&100.0\% & 1 \\
+\hline
+\hyperref[getDate:36]{getDate} & 36&100.0\% & 1 \\
+\hline
+\hyperref[getGroup:33]{getGroup} & 33&100.0\% & 1 \\
+\hline
+\hyperref[getId:30]{getId} & 30&100.0\% & 1 \\
+\hline
+\hyperref[getName:39]{getName} & 39&100.0\% & 1 \\
+\hline
+\hyperref[getOperations:91]{getOperations} & 91&0.0\% & 0 \\
+\hline
+\hyperref[getPlates:42]{getPlates} & 42&100.0\% & 2 \\
+\hline
+\hyperref[isCancelled:54]{isCancelled} & 54&100.0\% & 3 \\
+\hline
+\hyperref[isInside:51]{isInside} & 51&100.0\% & 3 \\
+\hline
+\hyperref[isNotExpired:63]{isNotExpired} & 63&56.0\% & 1 \\
+\hline
+\hyperref[reactivate:60]{reactivate} & 60&100.0\% & 1 \\
+\hline
+\hyperref[removePlate:80]{removePlate} & 80&100.0\% & 1 \\
+\hline
+\hyperref[setInside:45]{setInside} & 45&100.0\% & 1 \\
+\hline
+\hyperref[setOutside:48]{setOutside} & 48&100.0\% & 1 \\
+\hline
+\hline
+Card.vdmpp & & 81.8\% & 26 \\
+\hline
+\end{longtable}
+

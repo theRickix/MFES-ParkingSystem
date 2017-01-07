@@ -55,13 +55,13 @@ public addParking: nat*Group ==> ParkingLot
 	)
 	pre newGroup in set groups;
 	
-public addOperation: Date*Card*ParkingLot*Type ==> Operation
-	addOperation(currentDate,newCard,newParking,newType) == (
+public addOperation: String*Date*Card*ParkingLot*Type ==> Operation
+	addOperation(plate,currentDate,newCard,newParking,newType) == (
 		dcl newOp: Operation := new Operation(idOperation,currentDate,newCard,newParking,newType);
 		ops := ops union {newOp};
 		return newOp;
 	)
-	pre newCard in set cards and newParking in set parkings;
+	pre newCard in set cards and newParking in set parkings and plate in set newCard.plates;
 	
 public cancelCard: Card ==> ()
 	cancelCard(newCard) == (
@@ -84,16 +84,7 @@ public getParkingCurrLotation: ParkingLot ==> nat
 	pre parking in set parkings;
 	
 public getCardOperations: Card ==> set of Operation
-	getCardOperations(newCard) == (
-		dcl opsCard: set of Operation;
-		
-		for all op in set ops do (
-			if op.cardUsed = newCard
-			then opsCard := opsCard union {op}
-		);
-		
-		return opsCard;
-	)
+	getCardOperations(newCard) == (return newCard.getOperations())
 	pre newCard in set cards;
 
 end System

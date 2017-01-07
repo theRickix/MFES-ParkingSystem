@@ -1,0 +1,103 @@
+\begin{vdmpp}[breaklines=true]
+class Operation
+
+types
+
+public Result = <Allow> | <Deny>;
+public Type = <Enter> | <Leave>;
+
+instance variables
+
+id: nat;
+date: Date;
+public cardUsed: Card;
+parking: ParkingLot;
+type: Type;
+result: Result;
+
+operations
+
+(*@
+\label{Operation:19}
+@*)
+public Operation: nat*Date*Card*ParkingLot*Type ==> Operation
+ Operation(newId,newDate,newCard,newParking,newType) == (
+  id := newId;
+  date := newDate;
+  cardUsed := newCard;
+  parking := newParking;
+  type := newType;
+  
+  if type = <Enter>
+  then (*@\vdmnotcovered{self}@*).enter();
+  
+  if type = <Leave>
+  then (*@\vdmnotcovered{self}@*).leave();
+  
+  cardUsed.addOperation(self);
+  return self;
+ );
+ 
+(*@
+\label{enter:37}
+@*)
+private enter: () ==> ()
+ enter() == (
+  result := <Deny>;
+  if cardUsed not in set parking.getCardsIn() and not cardUsed.isInside()
+  then (
+  result := <Allow>;
+  parking.carEntered(cardUsed);
+  cardUsed.setInside();
+  )
+ ) 
+ pre (cardUsed.expirationDate.year > date.year or --Check if it has not expired
+  (cardUsed.expirationDate.year = date.year and cardUsed.expirationDate.month > date.month) or
+  ((*@\vdmnotcovered{cardUsed}@*).(*@\vdmnotcovered{expirationDate}@*).(*@\vdmnotcovered{year}@*) (*@\vdmnotcovered{=}@*) (*@\vdmnotcovered{date}@*).(*@\vdmnotcovered{year}@*) (*@\vdmnotcovered{and}@*) (*@\vdmnotcovered{cardUsed}@*).(*@\vdmnotcovered{expirationDate}@*).(*@\vdmnotcovered{month}@*) (*@\vdmnotcovered{=}@*) (*@\vdmnotcovered{date}@*).(*@\vdmnotcovered{month}@*)
+   (*@\vdmnotcovered{and}@*) (*@\vdmnotcovered{cardUsed}@*).(*@\vdmnotcovered{expirationDate}@*).(*@\vdmnotcovered{day}@*) (*@\vdmnotcovered{>=}@*) (*@\vdmnotcovered{date}@*).(*@\vdmnotcovered{day}@*)))
+   and not cardUsed.cancelled --Check if card is cancelled
+   and not parking.maintenance
+   and not parking.currLotation = 0; --Check if parking is on maintenance;
+
+(*@
+\label{leave:55}
+@*)
+private leave: () ==> ()
+ leave() == (
+  result := <Deny>;
+  if cardUsed in set parking.getCardsIn() and cardUsed.isInside()
+  then (
+  result := <Allow>;
+  parking.carLeft(cardUsed);
+  cardUsed.setOutside();
+  )
+ ); --I assumed not to check same things as in "enter" because the car has to go out even
+   -- even if it is cancelled or expired, I guess
+   
+(*@
+\label{getResult:67}
+@*)
+public getResult: () ==> Result
+ getResult() == return self.result;
+
+end Operation
+\end{vdmpp}
+\bigskip
+\begin{longtable}{|l|r|r|r|}
+\hline
+Function or operation & Line & Coverage & Calls \\
+\hline
+\hline
+\hyperref[Operation:19]{Operation} & 19&92.0\% & 3 \\
+\hline
+\hyperref[enter:37]{enter} & 37&72.6\% & 2 \\
+\hline
+\hyperref[getResult:67]{getResult} & 67&100.0\% & 3 \\
+\hline
+\hyperref[leave:55]{leave} & 55&100.0\% & 1 \\
+\hline
+\hline
+Operation.vdmpp & & 81.3\% & 9 \\
+\hline
+\end{longtable}
+

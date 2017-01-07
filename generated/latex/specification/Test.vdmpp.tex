@@ -1,0 +1,121 @@
+\begin{vdmpp}[breaklines=true]
+class Test is subclass of MyTestCase
+
+types
+public Type = <Enter> | <Leave>;
+public Result = <Allow> | <Deny>;
+
+operations
+(*@
+\label{Test:8}
+@*)
+public Test: () ==> Test
+ Test() == (
+  return self;
+  );
+  
+--Test initializing and populating System.
+(*@
+\label{testSystem:14}
+@*)
+public testSystem: () ==> ()
+ testSystem() == (
+  dcl system: System := new System();
+  dcl group: Group := system.addGroup("Students");
+  dcl park: ParkingLot := system.addParking(30,group);
+  dcl date1: Date := new Date(31,12,2017);
+  dcl card1: Card := system.addCard(group,"John Doe",date1);
+  
+  assertEqual("Students",group.getName());
+  assertEqual("Students",park.getGroup().getName());
+  assertEqual(30,park.getMaxLotation());
+  assertEqual("John Doe",card1.getName());
+  assertEqual(group,card1.getGroup());
+  assertEqual(date1,card1.getDate());
+  
+  assertEqual(0,group.getId());
+  assertEqual(0,park.getId());
+  assertEqual(0,card1.getId());
+ );
+ 
+(*@
+\label{testCard:34}
+@*)
+public testCard: () ==> ()
+ testCard() == (
+  dcl system: System := new System();
+  dcl group: Group := system.addGroup("Students");
+  dcl date1: Date := new Date(1,1,2015);
+  dcl date2: Date := new Date(2,2,2017);
+  dcl card1: Card := system.addCard(group,"John Doe",date1);
+  
+  assertEqual(false,card1.isCancelled());
+  assertEqual(false,card1.isInside());
+  assertEqual(false,card1.isNotExpired(date2));
+  
+  
+  system.cancelCard(card1);
+  assertEqual(true,card1.isCancelled());
+  
+  system.reactivateCard(card1);
+  assertEqual(false,card1.isCancelled());
+  
+  card1.addPlate("33-MM-22");
+  assertEqual({"33-MM-22"},card1.getPlates());
+  card1.removePlate("33-MM-22");
+  assertEqual({},card1.getPlates());
+  
+ );
+ 
+ 
+(*@
+\label{testOperation:61}
+@*)
+public testOperation: () ==> ()
+ testOperation() == (
+  dcl system: System := new System();
+  dcl group: Group := system.addGroup("Students");
+  dcl park1: ParkingLot := system.addParking(30,group);
+  dcl date1: Date := new Date(31,12,2017);
+  dcl date2: Date := new Date(2,2,2017);
+  dcl card1: Card := system.addCard(group,"John Doe",date1);
+  dcl op1: Operation;
+  dcl op2: Operation;
+  dcl op3: Operation;
+  
+  card1.addPlate("33-MM-22");
+  op1 := system.addOperation("33-MM-22",date2,card1,park1,<Enter>);
+  op2 := system.addOperation("33-MM-22",date2,card1,park1,<Enter>);
+  
+  assertEqual(<Allow>,op1.getResult());
+  assertEqual(<Deny>,op2.getResult());
+  assertEqual(29,system.getParkingCurrLotation(park1));
+  
+  op3 := system.addOperation("33-MM-22",date2,card1,park1,<Leave>);
+  assertEqual(<Allow>,op1.getResult());
+  assertEqual(30,park1.getCurrLotation());
+  
+  assertEqual({op1,op2,op3},system.getCardOperations(card1));
+  
+ );
+end Test
+\end{vdmpp}
+\bigskip
+\begin{longtable}{|l|r|r|r|}
+\hline
+Function or operation & Line & Coverage & Calls \\
+\hline
+\hline
+\hyperref[Test:8]{Test} & 8&100.0\% & 1 \\
+\hline
+\hyperref[testCard:34]{testCard} & 34&0.0\% & 0 \\
+\hline
+\hyperref[testOperation:61]{testOperation} & 61&0.0\% & 0 \\
+\hline
+\hyperref[testSystem:14]{testSystem} & 14&0.0\% & 0 \\
+\hline
+\hline
+Test.vdmpp & & 100.0\% & 1 \\
+\hline
+\end{longtable}
+

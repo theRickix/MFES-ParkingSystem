@@ -1,5 +1,9 @@
 class Test is subclass of MyTestCase
 
+types
+public Type = <Enter> | <Leave>;
+public Result = <Allow> | <Deny>;
+
 operations
 public Test: () ==> Test
 	Test() == (
@@ -21,6 +25,10 @@ public testSystem: () ==> ()
 		assertEqual("John Doe",card1.getName());
 		assertEqual(group,card1.getGroup());
 		assertEqual(date1,card1.getDate());
+		
+		assertEqual(0,group.getId());
+		assertEqual(0,park.getId());
+		assertEqual(0,card1.getId());
 	);
 	
 public testCard: () ==> ()
@@ -36,15 +44,45 @@ public testCard: () ==> ()
 		assertEqual(false,card1.isNotExpired(date2));
 		
 		
-		card1.cancel();
+		system.cancelCard(card1);
 		assertEqual(true,card1.isCancelled());
 		
-		card1.reactivate();
+		system.reactivateCard(card1);
 		assertEqual(false,card1.isCancelled());
 		
 		card1.addPlate("33-MM-22");
 		assertEqual({"33-MM-22"},card1.getPlates());
+		card1.removePlate("33-MM-22");
+		assertEqual({},card1.getPlates());
 		
+	);
+	
+	
+public testOperation: () ==> ()
+	testOperation() == (
+		dcl system: System := new System();
+		dcl group: Group := system.addGroup("Students");
+		dcl park1: ParkingLot := system.addParking(30,group);
+		dcl date1: Date := new Date(31,12,2017);
+		dcl date2: Date := new Date(2,2,2017);
+		dcl card1: Card := system.addCard(group,"John Doe",date1);
+		dcl op1: Operation;
+		dcl op2: Operation;
+		dcl op3: Operation;
+		
+		card1.addPlate("33-MM-22");
+		op1 := system.addOperation("33-MM-22",date2,card1,park1,<Enter>);
+		op2 := system.addOperation("33-MM-22",date2,card1,park1,<Enter>);
+		
+		assertEqual(<Allow>,op1.getResult());
+		assertEqual(<Deny>,op2.getResult());
+		assertEqual(29,system.getParkingCurrLotation(park1));
+		
+		op3 := system.addOperation("33-MM-22",date2,card1,park1,<Leave>);
+		assertEqual(<Allow>,op1.getResult());
+		assertEqual(30,park1.getCurrLotation());
+		
+		assertEqual({op1,op2,op3},system.getCardOperations(card1));
 		
 	);
 end Test

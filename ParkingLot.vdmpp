@@ -4,7 +4,7 @@ types
 instance variables
 id: nat;
 maxLotation: nat;
-currLotation: nat;
+public currLotation: nat;
 group: Group;
 cardsIn: set of Card;
 public maintenance: bool;
