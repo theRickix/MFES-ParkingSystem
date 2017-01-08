@@ -1,4 +1,4 @@
-class System
+class MySystem
 types
 public String = seq of char;
 public Result = <Allow> | <Deny>;
@@ -16,8 +16,8 @@ parkings: set of ParkingLot;
 ops: set of Operation;
 
 operations
-public System: () ==> System
-	System() == (
+public MySystem: () ==> MySystem
+	MySystem() == (
 		idGroup:=0;
 		idCard:=0;
 		idParking:=0;
@@ -87,4 +87,4 @@ public getCardOperations: Card ==> set of Operation
 	getCardOperations(newCard) == (return newCard.getOperations())
 	pre newCard in set cards;
 
-end System
+end MySystem
