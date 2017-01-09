@@ -1,0 +1,231 @@
+\documentclass[12pt]{report}
+\usepackage[a4paper]{geometry}
+\usepackage[myheadings]{fullpage}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\usepackage{graphicx, wrapfig, subcaption, setspace, booktabs}
+\usepackage[T1]{fontenc}
+\usepackage[font=small, labelfont=bf]{caption}
+\usepackage{fourier}
+\usepackage[protrusion=true, expansion=true]{microtype}
+\usepackage[english]{babel}
+\usepackage{sectsty}
+\usepackage{url, lipsum}
+\usepackage[color]{vdmlisting}
+\usepackage[hidelinks]{hyperref} 
+\usepackage{longtable}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\graphicspath{ {images/} }
+
+\newcommand{\HRule}[1]{\rule{\linewidth}{#1}}
+\onehalfspacing
+\setcounter{tocdepth}{5}
+\setcounter{secnumdepth}{5}
+
+\lstdefinestyle{DOS}
+{
+    backgroundcolor=\color{black},
+    basicstyle=\scriptsize\color{white}\ttfamily
+}
+
+%-------------------------------------------------------------------------------
+% HEADER & FOOTER
+%-------------------------------------------------------------------------------
+\pagestyle{fancy}
+\fancyhf{}
+\setlength\headheight{15pt}
+\fancyhead[L]{MFES}
+\fancyhead[R]{FEUP}
+\fancyfoot[R]{\thepage\ }
+%-------------------------------------------------------------------------------
+% TITLE PAGE
+%-------------------------------------------------------------------------------
+
+\begin{document}
+
+\title{ \normalsize \textsc{Métodos Formais em Engenharia de Software}
+		\\ [2.0cm]
+		\HRule{0.5pt} \\
+		\LARGE \textbf{\uppercase{Formal Modeling of a Parking Lot Management System in VDM++}}
+		\HRule{2pt} \\ [0.5cm]
+		\normalsize \today \vspace*{5\baselineskip}}
+
+\date{}
+
+\author{
+		Ricardo Manuel Correia Magalhães \\ 
+		Mestrado Integrado em Engenharia Informática e de Computação \\
+		Faculdade de Engenharia da Universidade do Porto }
+
+\maketitle
+\tableofcontents
+\newpage
+
+%-------------------------------------------------------------------------------
+% Section title formatting
+\sectionfont{\scshape}
+%-------------------------------------------------------------------------------
+
+%-------------------------------------------------------------------------------
+% BODY
+%-------------------------------------------------------------------------------
+
+\section*{1. Informal system description and list of requirements}
+\addcontentsline{toc}{section}{1. Informal system description and list of requirements}
+\subsection*{1.1. Informal system description}
+\addcontentsline{toc}{subsection}{1.1. Informal system description}
+
+This system's goal is to maintain a set of parking lots. The users have a card with information (expiration date, plates, etc) and can enter or leave parking lots authorized for their group. The system is capable of creating every entity (card, parking, group) and doing operations, allowing or denying it. It can also list operations of a certain card and canceling or reactivating it.
+
+\subsection*{1.2. List of requirements}
+\addcontentsline{toc}{subsection}{1.2. List of requirements}
+
+\begin{longtable}{|c|c|c|}
+\hline
+\textbf{Id} & \textbf{Priority} & \textbf{Description} \\
+\hline
+R1 & Mandatory & Add groups to the system.\\
+\hline
+R2 & Mandatory & Add a card, along with its owner's name and plates, with the belonging group.\\
+\hline
+R3 & Mandatory & Add a parking lot to be used by a certain group.\\
+\hline
+R4 & Mandatory & Add an operation (car entering or leaving). \\
+\hline
+R5 & Mandatory & List a card's operations.\\
+\hline
+R6 & Mandatory & Cancel and reactivate a card. \\
+\hline
+R6 & Mandatory & Check information about current parking lot's lotation. \\
+\hline
+\end{longtable}
+
+\newpage
+
+\section*{2. Visual UML Model}
+\addcontentsline{toc}{section}{2. Visual UML Model}
+\subsection*{2.1. Use Case Model}
+\addcontentsline{toc}{subsection}{2.1. Use Case Model}
+
+\includegraphics{use-case-model}
+
+\subsection*{2.2. Class Model}
+\addcontentsline{toc}{subsection}{2.2. Class Model}
+
+\includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{mfes-class-diagram}
+
+\begin{longtable}{|c|c|}
+\hline
+\textbf{Class Name} & \textbf{Description} \\
+\hline
+Card & Save card information and do operations related to it.\\
+\hline
+Group & Save group information and do operations related to it.\\
+\hline
+ParkingLot & Save parking lot information and do operations related to it.\\
+\hline
+Date & Auxiliar class to store date.\\
+\hline
+MySystem & Main class to do all operations \\
+\hline
+\end{longtable}
+
+\newpage
+
+\section*{3. Formal VDM++ Model}
+\addcontentsline{toc}{section}{3. Formal VDM++ Model}
+
+\subsection*{3.1. Card}
+\addcontentsline{toc}{subsection}{3.1. Card}
+\input{specification/Card.vdmpp.tex}
+\subsection*{3.2. Date}
+\addcontentsline{toc}{subsection}{3.2. Date}
+\input{specification/Date.vdmpp.tex}
+\subsection*{3.3. Group}
+\addcontentsline{toc}{subsection}{3.3. Group}
+\input{specification/Group.vdmpp.tex}
+\subsection*{3.4. MySystem}
+\addcontentsline{toc}{subsection}{3.4. MySystem}
+\input{specification/MySystem.vdmpp.tex}
+\subsection*{3.5. Operation}
+\addcontentsline{toc}{subsection}{3.5. Operation}
+\input{specification/Operation.vdmpp.tex}
+\subsection*{3.6. ParkingLot}
+\addcontentsline{toc}{subsection}{3.6. ParkingLot}
+\input{specification/ParkingLot.vdmpp.tex}
+
+\newpage
+
+\section*{4. Model Validation}
+\addcontentsline{toc}{section}{4. Model Validation}
+
+\subsection*{4.1.MyTestCase}
+\addcontentsline{toc}{subsection}{4.1. MyTestCase}
+\input{specification/MyTestCase.vdmpp.tex}
+\subsection*{4.2. Test}
+\addcontentsline{toc}{subsection}{4.2. Test}
+\input{specification/Test.vdmpp.tex}
+
+\newpage
+\section*{5. Code Generation}
+\addcontentsline{toc}{section}{5. Code Generation}
+After successfully generating Java code, a console interface was built to test all the features. One of the things to change was 'seq of char' to 'String' in order to use the 'Scanner' class in Java. The interface is easy and minimalist, with menus navigation in lists with the option chosen by the user. Below are some examples.
+
+\begin{lstlisting}[style=DOS]
+**********
+***MENU***
+**********
+
+1. Add Group
+2. Add Card
+3. Add Parking Lot
+4. Register Operation
+5. Get Card Operations
+6. Cancel Card
+7. Reactivate Card
+
+Option: 1
+\end{lstlisting}
+
+\begin{lstlisting}[style=DOS]
+**************
+***ADD CARD***
+**************
+
+CHOOSE A GROUP FROM BELOW:
+
+0. Students
+Group ID: 0
+
+------------------
+Name: Ricardo
+Day of Expiration Date: 1
+Month of Expiration Date: 1
+Year of Expiration Date: 2018
+Add a Plate: 55-MM-FF
+
+Press 1 to add another one; else to add the card as it is: 0
+Card 'Ricardo' added!
+Enter 0 for back menu...
+\end{lstlisting}
+
+\newpage
+\section*{6. Conclusions}
+\addcontentsline{toc}{section}{6. Conclusions}
+The system does most of what is required, except renovating the expiration date of the card. Some more conditions and invariants could be added. Also, the class 'Date' should try to verify months with different number of days. However, the usage of VDM++ on this particular project contributed to my knowledge of the language and understanding the usefulness of it.
+
+\newpage
+
+\section*{7. References}
+\addcontentsline{toc}{section}{7. References}
+\begin{enumerate}
+\item Class notes available in Moodle.
+\item Overture IDE Guide.
+\item \LaTeX\  documentation to write report.
+\end{enumerate}
+
+
+
+
+\end{document}

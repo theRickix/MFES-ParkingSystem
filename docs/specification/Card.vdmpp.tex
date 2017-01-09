@@ -141,7 +141,7 @@ public addOperation: Operation ==> ()
 \label{getOperations:91}
 @*)
 public getOperations: () ==> set of Operation
- getOperations() == (*@\vdmnotcovered{return}@*) (*@\vdmnotcovered{self}@*).(*@\vdmnotcovered{ops}@*);
+ getOperations() == return self.ops;
  
 end Card
 \end{vdmpp}
@@ -167,7 +167,7 @@ Function or operation & Line & Coverage & Calls \\
 \hline
 \hyperref[getName:39]{getName} & 39&100.0\% & 1 \\
 \hline
-\hyperref[getOperations:91]{getOperations} & 91&0.0\% & 0 \\
+\hyperref[getOperations:91]{getOperations} & 91&100.0\% & 1 \\
 \hline
 \hyperref[getPlates:42]{getPlates} & 42&100.0\% & 2 \\
 \hline
@@ -186,7 +186,7 @@ Function or operation & Line & Coverage & Calls \\
 \hyperref[setOutside:48]{setOutside} & 48&100.0\% & 1 \\
 \hline
 \hline
-Card.vdmpp & & 81.8\% & 26 \\
+Card.vdmpp & & 84.4\% & 27 \\
 \hline
 \end{longtable}
 

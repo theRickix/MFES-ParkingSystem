@@ -94,7 +94,7 @@ public class MyInterface {
 		Scanner s = new Scanner(System.in);
 		int groupId = s.nextInt();
 		
-		
+		System.out.println("\n------------------");
 		
 		System.out.print("Name: ");
 		String name = s.next();
@@ -102,7 +102,7 @@ public class MyInterface {
 		int day = s.nextInt();
 		System.out.print("Month of Expiration Date: ");
 		int month = s.nextInt();
-		System.out.print("Yearr of Expiration Date: ");
+		System.out.print("Year of Expiration Date: ");
 		int year = s.nextInt();
 		
 		Date date = new Date((Number) day, (Number) month, (Number) year);
@@ -119,7 +119,7 @@ public class MyInterface {
 			System.out.print("Add a Plate: ");
 			String plate = s.next();
 			card.addPlate(plate);
-			System.out.print("Press 1 to add another one; else to add the card as it is: ");
+			System.out.print("\nPress 1 to add another one; else to add the card as it is: ");
 			int option = s.nextInt();
 			if(option == 1)
 				add = true;

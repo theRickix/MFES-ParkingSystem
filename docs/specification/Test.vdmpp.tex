@@ -14,17 +14,20 @@ public Test: () ==> Test
   return self;
   );
   
---Test initializing and populating System.
+--Test initializing and populating MySystem.
+(*@
+\label{testMySystem:14}
+@*)
 (*@
 \label{testSystem:14}
 @*)
-public testSystem: () ==> ()
- testSystem() == (
-  dcl system: System := new System();
-  dcl group: Group := system.addGroup("Students");
-  dcl park: ParkingLot := system.addParking(30,group);
+public testMySystem: () ==> ()
+ testMySystem() == (
+  dcl MySystem: MySystem := new MySystem();
+  dcl group: Group := MySystem.addGroup("Students");
+  dcl park: ParkingLot := MySystem.addParking(30,group);
   dcl date1: Date := new Date(31,12,2017);
-  dcl card1: Card := system.addCard(group,"John Doe",date1);
+  dcl card1: Card := MySystem.addCard(group,"John Doe",date1);
   
   assertEqual("Students",group.getName());
   assertEqual("Students",park.getGroup().getName());
@@ -43,21 +46,21 @@ public testSystem: () ==> ()
 @*)
 public testCard: () ==> ()
  testCard() == (
-  dcl system: System := new System();
-  dcl group: Group := system.addGroup("Students");
+  dcl MySystem: MySystem := new MySystem();
+  dcl group: Group := MySystem.addGroup("Students");
   dcl date1: Date := new Date(1,1,2015);
   dcl date2: Date := new Date(2,2,2017);
-  dcl card1: Card := system.addCard(group,"John Doe",date1);
+  dcl card1: Card := MySystem.addCard(group,"John Doe",date1);
   
   assertEqual(false,card1.isCancelled());
   assertEqual(false,card1.isInside());
   assertEqual(false,card1.isNotExpired(date2));
   
   
-  system.cancelCard(card1);
+  MySystem.cancelCard(card1);
   assertEqual(true,card1.isCancelled());
   
-  system.reactivateCard(card1);
+  MySystem.reactivateCard(card1);
   assertEqual(false,card1.isCancelled());
   
   card1.addPlate("33-MM-22");
@@ -73,29 +76,29 @@ public testCard: () ==> ()
 @*)
 public testOperation: () ==> ()
  testOperation() == (
-  dcl system: System := new System();
-  dcl group: Group := system.addGroup("Students");
-  dcl park1: ParkingLot := system.addParking(30,group);
+  dcl MySystem: MySystem := new MySystem();
+  dcl group: Group := MySystem.addGroup("Students");
+  dcl park1: ParkingLot := MySystem.addParking(30,group);
   dcl date1: Date := new Date(31,12,2017);
   dcl date2: Date := new Date(2,2,2017);
-  dcl card1: Card := system.addCard(group,"John Doe",date1);
+  dcl card1: Card := MySystem.addCard(group,"John Doe",date1);
   dcl op1: Operation;
   dcl op2: Operation;
   dcl op3: Operation;
   
   card1.addPlate("33-MM-22");
-  op1 := system.addOperation("33-MM-22",date2,card1,park1,<Enter>);
-  op2 := system.addOperation("33-MM-22",date2,card1,park1,<Enter>);
+  op1 := MySystem.addOperation("33-MM-22",date2,card1,park1,<Enter>);
+  op2 := MySystem.addOperation("33-MM-22",date2,card1,park1,<Enter>);
   
   assertEqual(<Allow>,op1.getResult());
   assertEqual(<Deny>,op2.getResult());
-  assertEqual(29,system.getParkingCurrLotation(park1));
+  assertEqual(29,MySystem.getParkingCurrLotation(park1));
   
-  op3 := system.addOperation("33-MM-22",date2,card1,park1,<Leave>);
+  op3 := MySystem.addOperation("33-MM-22",date2,card1,park1,<Leave>);
   assertEqual(<Allow>,op1.getResult());
   assertEqual(30,park1.getCurrLotation());
   
-  assertEqual({op1,op2,op3},system.getCardOperations(card1));
+  assertEqual({op1,op2,op3},MySystem.getCardOperations(card1));
   
  );
 end Test
@@ -108,14 +111,16 @@ Function or operation & Line & Coverage & Calls \\
 \hline
 \hyperref[Test:8]{Test} & 8&100.0\% & 1 \\
 \hline
-\hyperref[testCard:34]{testCard} & 34&0.0\% & 0 \\
+\hyperref[testCard:34]{testCard} & 34&100.0\% & 1 \\
 \hline
-\hyperref[testOperation:61]{testOperation} & 61&0.0\% & 0 \\
+\hyperref[testMySystem:14]{testMySystem} & 14&100.0\% & 1 \\
 \hline
-\hyperref[testSystem:14]{testSystem} & 14&0.0\% & 0 \\
+\hyperref[testOperation:61]{testOperation} & 61&100.0\% & 1 \\
+\hline
+\hyperref[testSystem:14]{testSystem} & 14&100.0\% & 1 \\
 \hline
 \hline
-Test.vdmpp & & 100.0\% & 1 \\
+Test.vdmpp & & 100.0\% & 5 \\
 \hline
 \end{longtable}
 

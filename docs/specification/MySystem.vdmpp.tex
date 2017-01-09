@@ -1,5 +1,5 @@
 \begin{vdmpp}[breaklines=true]
-class System
+class MySystem
 types
 public String = seq of char;
 public Result = <Allow> | <Deny>;
@@ -18,10 +18,19 @@ ops: set of Operation;
 
 operations
 (*@
+\label{MySystem:19}
+@*)
+(*@
 \label{System:19}
 @*)
-public System: () ==> System
- System() == (
+(*@
+\label{MySystem:19}
+@*)
+(*@
+\label{System:19}
+@*)
+public MySystem: () ==> MySystem
+ MySystem() == (
   idGroup:=0;
   idCard:=0;
   idParking:=0;
@@ -36,6 +45,12 @@ public System: () ==> System
 (*@
 \label{addGroup:32}
 @*)
+(*@
+\label{addGroup:32}
+@*)
+(*@
+\label{addGroup:32}
+@*)
 public addGroup: String ==> Group
  addGroup(newName) == (
   dcl newGroup: Group := new Group(idGroup,newName);
@@ -44,6 +59,12 @@ public addGroup: String ==> Group
   return newGroup;
  );
  
+(*@
+\label{addCard:40}
+@*)
+(*@
+\label{addCard:40}
+@*)
 (*@
 \label{addCard:40}
 @*)
@@ -59,6 +80,12 @@ public addCard: Group*String*Date==> Card
 (*@
 \label{addParking:49}
 @*)
+(*@
+\label{addParking:49}
+@*)
+(*@
+\label{addParking:49}
+@*)
 public addParking: nat*Group ==> ParkingLot
  addParking(maxLotation,newGroup) == (
   dcl newParking: ParkingLot := new ParkingLot(idParking,maxLotation,newGroup);
@@ -68,6 +95,12 @@ public addParking: nat*Group ==> ParkingLot
  )
  pre newGroup in set groups;
  
+(*@
+\label{addOperation:58}
+@*)
+(*@
+\label{addOperation:58}
+@*)
 (*@
 \label{addOperation:58}
 @*)
@@ -82,6 +115,12 @@ public addOperation: String*Date*Card*ParkingLot*Type ==> Operation
 (*@
 \label{cancelCard:66}
 @*)
+(*@
+\label{cancelCard:66}
+@*)
+(*@
+\label{cancelCard:66}
+@*)
 public cancelCard: Card ==> ()
  cancelCard(newCard) == (
   newCard.cancel()
@@ -89,6 +128,12 @@ public cancelCard: Card ==> ()
  pre newCard in set cards
  post newCard.cancelled = true;
 
+(*@
+\label{reactivateCard:73}
+@*)
+(*@
+\label{reactivateCard:73}
+@*)
 (*@
 \label{reactivateCard:73}
 @*)
@@ -102,6 +147,12 @@ public reactivateCard: Card ==> ()
 (*@
 \label{getParkingCurrLotation:80}
 @*)
+(*@
+\label{getParkingCurrLotation:80}
+@*)
+(*@
+\label{getParkingCurrLotation:80}
+@*)
 public getParkingCurrLotation: ParkingLot ==> nat
  getParkingCurrLotation(parking) == (
   return parking.getCurrLotation();
@@ -111,17 +162,25 @@ public getParkingCurrLotation: ParkingLot ==> nat
 (*@
 \label{getCardOperations:86}
 @*)
+(*@
+\label{getCardOperations:86}
+@*)
+(*@
+\label{getCardOperations:86}
+@*)
 public getCardOperations: Card ==> set of Operation
- getCardOperations(newCard) == (return newCard.ops)
+ getCardOperations(newCard) == (return newCard.getOperations())
  pre newCard in set cards;
 
-end System
+end MySystem
 \end{vdmpp}
 \bigskip
 \begin{longtable}{|l|r|r|r|}
 \hline
 Function or operation & Line & Coverage & Calls \\
 \hline
+\hline
+\hyperref[MySystem:19]{MySystem} & 19&100.0\% & 3 \\
 \hline
 \hyperref[System:19]{System} & 19&100.0\% & 3 \\
 \hline
@@ -142,7 +201,7 @@ Function or operation & Line & Coverage & Calls \\
 \hyperref[reactivateCard:73]{reactivateCard} & 73&100.0\% & 1 \\
 \hline
 \hline
-System.vdmpp & & 100.0\% & 18 \\
+MySystem.vdmpp & & 100.0\% & 57 \\
 \hline
 \end{longtable}
 
